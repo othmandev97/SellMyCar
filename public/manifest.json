@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "rent my car",
+  "name": "Rent My Car",
+  "description": "rent cars online",
   "icons": [
     {
       "src": "favicon.ico",
@@ -16,6 +17,12 @@
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "maskable_icon",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
