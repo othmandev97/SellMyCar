@@ -98,13 +98,10 @@ export default function EditListing() {
 
   //redirect if user not logged in
   useEffect(() => {
-    if (ListingData.userRef !== auth.currentUser.uid) {
+    if (!ListingData.userRef == auth.currentUser.uid) {
       toast.error("You can't edit this listing");
-      // navigate("/");
+      navigate("/profile");
     }
-
-    // console.log("1" + ListingData.userRef);
-    // console.log("2" + auth.currentUser.uid);
   });
   useEffect(() => {
     //

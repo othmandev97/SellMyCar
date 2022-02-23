@@ -65,6 +65,7 @@ export const AddListing = () => {
   // position
   const [position, setPosition] = useState(null);
 
+  // let imagesnew = [];
   const [ListingData, setListingData] = useState({
     Title: "",
     Brand: "",
@@ -172,6 +173,7 @@ export const AddListing = () => {
             // Upload completed successfully, now we can get the download URL
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               resolve(downloadURL);
+              imagesnew.push(downloadURL);
             });
           }
         );
@@ -179,6 +181,7 @@ export const AddListing = () => {
     };
 
     //
+
     const imageUrls = await Promise.all(
       [...Images].map((image) => {
         StoreImage(image);
@@ -188,7 +191,7 @@ export const AddListing = () => {
       return;
     });
 
-    console.log(imageUrls);
+    // console.log(imagesnew);
 
     // upload to firestore
     //copy of the date
