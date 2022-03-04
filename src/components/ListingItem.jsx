@@ -23,7 +23,7 @@ export const ListingItem = ({ list, id, onDelete, onUpdate }) => {
   return (
     <div className="listingOffers--item">
       <div className="listingOffers--item--img">
-        <img src={list.data.Images} alt={list.data.Brand} />
+        <img src={list.data.imageUrls} alt={list.data.Brand} />
       </div>
       <div className="listingOffers--item--info">
         <div className="listingOffers--item--info--header">

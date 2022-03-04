@@ -61,7 +61,9 @@ export const AddListing = () => {
   const [Loading, setLoading] = useState(false);
   const [PriceState, setPriceState] = useState(true);
   const [GeoLocation, setGeoLocation] = useState(true);
-
+  const [ImagesUrlToupload, setImagesUrlToupload] = useState(null);
+  let arrayimg = [];
+  const [value, setValue] = useState([]);
   // position
   const [position, setPosition] = useState(null);
 
@@ -71,7 +73,7 @@ export const AddListing = () => {
     Brand: "",
     Price: 0,
     DiscountedPrice: 0,
-    Images: {},
+    Images: [],
     Mileage: 0,
     Model: "",
     ModelYear: "",
@@ -156,24 +158,23 @@ export const AddListing = () => {
           },
           (error) => {
             reject(error);
-            switch (error.code) {
-              case "storage/unauthorized":
-                // User doesn't have permission to access the object
-                break;
-              case "storage/canceled":
-                // User canceled the upload
-                break;
-              // ...
-              case "storage/unknown":
-                // Unknown error occurred, inspect error.serverResponse
-                break;
-            }
+            // switch (error.code) {
+            //   case "storage/unauthorized":
+            //     // User doesn't have permission to access the object
+            //     break;
+            //   case "storage/canceled":
+            //     // User canceled the upload
+            //     break;
+            //   // ...
+            //   case "storage/unknown":
+            //     // Unknown error occurred, inspect error.serverResponse
+            //     break;
+            // }
           },
           () => {
             // Upload completed successfully, now we can get the download URL
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               resolve(downloadURL);
-              imagesnew.push(downloadURL);
             });
           }
         );
@@ -183,33 +184,44 @@ export const AddListing = () => {
     //
 
     const imageUrls = await Promise.all(
-      [...Images].map((image) => {
-        StoreImage(image);
-      })
+      [...Images].map((image) => StoreImage(image))
     ).catch(() => {
       toast.error("images not uploaded");
       return;
     });
 
-    // console.log(imagesnew);
-
+    // console.log(imageUrls);
     // upload to firestore
     //copy of the date
 
+    // const CopyListingData = {
+    //   ...ListingData,
+    //   imageUrls: imageUrls,
+    //   timestamp: serverTimestamp(),
+    // };
+
+    // delete CopyListingData.Images;
+
+    // const docRef = await addDoc(collection(db, "listing"), CopyListingData);
+    // toast.success("listing added succesfully");
+    // navigate(`/profile`);
+
+    // return imageUrls;
+    awaitforimages(imageUrls);
+  };
+
+  const awaitforimages = async (imageUrls) => {
     const CopyListingData = {
       ...ListingData,
-      // imageUrls: imageUrls,
+      imageUrls: imageUrls,
       timestamp: serverTimestamp(),
     };
 
     delete CopyListingData.Images;
 
-    console.log(CopyListingData);
-    console.log(ListingData);
-
     const docRef = await addDoc(collection(db, "listing"), CopyListingData);
     toast.success("listing added succesfully");
-    navigate(`/`);
+    navigate(`/profile`);
   };
 
   const OnChangeoffer = () => {
@@ -241,8 +253,8 @@ export const AddListing = () => {
     }
     setUploadedImages(uploadedImagesArray);
     // uploadedImagesArray.push(URL.createObjectURL(e.target.files[0]));
-    console.log(UploadedImages);
-    console.log(uploadedImagesArray);
+    // console.log(UploadedImages);
+    // console.log(uploadedImagesArray);
   };
 
   const onRemoveUploadImages = (e) => {
@@ -496,13 +508,11 @@ export const AddListing = () => {
               <div className="uploadedImages__wrapper">
                 {/* <img src={uploadedImagesArray}></img> */}
                 {(UploadedImages || []).map((url, index) => (
-                  <>
-                    <div className="uploadedImages">
-                      <div className="uploadedImages--overlay"></div>
-                      <img src={url} alt="" />
-                      <BsXCircle onClick={onRemoveUploadImages} id={index} />
-                    </div>
-                  </>
+                  <div className="uploadedImages" key={index}>
+                    <div className="uploadedImages--overlay"></div>
+                    <img src={url} alt="" />
+                    <BsXCircle onClick={onRemoveUploadImages} id={index} />
+                  </div>
                 ))}
               </div>
               <input

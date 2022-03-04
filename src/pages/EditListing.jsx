@@ -180,16 +180,16 @@ export default function EditListing() {
 
     //
 
-    if (e.target.files) {
-      const imageUrls = await Promise.all(
-        [...Images].map((image) => {
-          StoreImage(image);
-        })
-      ).catch(() => {
-        toast.error("images not uploaded");
-        return;
-      });
-    }
+    // if (e.target.files) {
+    const imageUrls = await Promise.all(
+      [...Images].map((image) => {
+        StoreImage(image);
+      })
+    ).catch(() => {
+      toast.error("images not uploaded");
+      return;
+    });
+    // }
     // console.log(imageUrls);
 
     // upload to firestore
@@ -197,7 +197,7 @@ export default function EditListing() {
 
     const CopyListingData = {
       ...ListingData,
-      // imageUrls: imageUrls,
+      imageUrls: imageUrls,
       timestamp: serverTimestamp(),
     };
 
@@ -242,8 +242,8 @@ export default function EditListing() {
       uploadedImagesArray.push(URL.createObjectURL(fileObj[0][i]));
     }
     setUploadedImages(uploadedImagesArray);
-    console.log(UploadedImages);
-    console.log(uploadedImagesArray);
+    // console.log(UploadedImages);
+    // console.log(uploadedImagesArray);
   };
 
   const onRemoveUploadImages = (e) => {

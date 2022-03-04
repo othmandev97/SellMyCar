@@ -76,7 +76,7 @@ export default function Home() {
                 <div className="listingRecent_boxes--card" key={list.id}>
                   <div className="listingRecent_boxes--card--item">
                     <div className="listingRecent_boxes--card--item--img">
-                      <img src={list.data.Images} alt={list.data.Brand} />
+                      <img src={list.data.imageUrls} alt={list.data.Brand} />
                     </div>
                     <div className="listingRecent_boxes--card--item--info">
                       <div className="listingRecent_boxes--card--item--info--header">
@@ -109,9 +109,8 @@ export default function Home() {
               pagination={{
                 clickable: true,
               }}
-              modules={[FreeMode, Pagination]}
+              modules={[FreeMode, Pagination, Controller]}
               className="mySwiper"
-              modules={[Controller]}
             >
               {loading ? (
                 <Loading />
@@ -121,26 +120,10 @@ export default function Home() {
                     <SwiperSlide key={list.id}>
                       <div className="popular_section_boxes--item">
                         <div className="popular_section_boxes--item--img">
-                          <img src={list.data.Images} alt={list.data.Brand} />
-                        </div>
-                        <div className="popular_section_boxes--item--info">
-                          <div className="popular_section_boxes--item--info--header">
-                            <h1>{list.data.Brand}</h1>
-                            <p>$ {list.data.Price}</p>
-                          </div>
-                          <div className="popular_section_boxes--item--info--body">
-                            <p>model:{list.data.Model}</p>
-                            <p>type:{list.data.Type}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                  {listings.map((list) => (
-                    <SwiperSlide key={list.id}>
-                      <div className="popular_section_boxes--item">
-                        <div className="popular_section_boxes--item--img">
-                          <img src={list.data.Images} alt={list.data.Brand} />
+                          <img
+                            src={list.data.imageUrls}
+                            alt={list.data.Brand}
+                          />
                         </div>
                         <div className="popular_section_boxes--item--info">
                           <div className="popular_section_boxes--item--info--header">
